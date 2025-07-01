@@ -1,0 +1,23 @@
+name: Daily Volume Screener
+
+on:
+  schedule:
+    # Example: Run 15 minutes after market open (e.g., 9:45 AM EST / 13:45 UTC)
+    # Adjust these cron expressions to your desired schedule.
+    # Remember GitHub Actions uses UTC.
+    - cron: '45 13 * * 1-5' # Example: 9:45 AM EST Mon-Fri (13:45 UTC)
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install yfinance requests pandas numpy
+      - name: Run Volume Screener
+        run: python volume_screener.py
